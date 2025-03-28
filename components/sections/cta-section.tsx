@@ -1,8 +1,13 @@
+"use client";
+
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import { Phone } from "lucide-react";
+import { CallButton } from "@/components/ui/call-button";
+import { usePhone } from "@/context/PhoneContext";
 
 export function CTASection() {
+  const { phone } = usePhone();
+
   return (
     <section className="w-full py-12 md:py-24 lg:py-32 bg-primary text-primary-foreground">
       <div className="container px-4 md:px-6">
@@ -23,17 +28,15 @@ export function CTASection() {
             >
               <Link href="#contacto">Solicitar Presupuesto</Link>
             </Button>
-            <Button
-              variant="outline"
-              size="lg"
-              asChild
-              className="border-white hover:bg-white/10 text-foreground"
-            >
-              <a href="tel:+34600123456">
-                <Phone className="h-5 w-5" />
-                <span>Llamar Ahora</span>
-              </a>
-            </Button>
+            {phone && (
+              <CallButton
+                variant="outline"
+                size="lg"
+                className="border-white hover:bg-white/10 text-foreground"
+              >
+                Llamar Ahora
+              </CallButton>
+            )}
           </div>
         </div>
       </div>

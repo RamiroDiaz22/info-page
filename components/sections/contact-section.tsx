@@ -2,13 +2,16 @@ import { CheckCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { ContactMeProps } from "../../types/components";
-import { SubTitleCustom } from "../ui/title";
-import { CONTACT_ICON } from "../../lib/const";
+import { ContactMeProps } from "@/types/components";
+import { SubTitleCustom } from "@/components/ui/title";
+import { CONTACT_ICON } from "@/lib/const";
+import { usePhone } from "@/context/PhoneContext";
 
 export function ContactSection({
-  data: { title, why, description, email, location, phone, timetables },
+  data: { title, why, description, email, location, timetables },
 }: ContactMeProps) {
+  const { phone } = usePhone();
+
   return (
     <section
       id="contacto"
@@ -34,7 +37,7 @@ export function ContactSection({
                   {CONTACT_ICON.phone}
                   <div>
                     <p className="text-sm text-muted-foreground">Teléfono</p>
-                    <p className="font-medium">{phone}</p>
+                    <p className="font-medium">+54 {phone}</p>
                   </div>
                 </div>
               )}
