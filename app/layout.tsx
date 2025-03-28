@@ -7,12 +7,14 @@ import { Header } from "@/components/layout/header";
 import { Footer } from "@/components/layout/footer";
 import { getLandingData, PARAMS_STRAPI } from "@/lib/request";
 import { parseConfigData } from "@/lib/functions";
-import { WhatsAppButton } from "@/components/layout/whatsapp-button";
-
-import "@/lib/dayjs";
+// import { WhatsAppButton } from "@/components/layout/whatsapp-button";
 import { CTASection } from "@/components/sections/cta-section";
 import { ErrorView } from "@/components/ui/error-view";
 import { ScrollToHash } from "@/components/utils/scroll-to-hash";
+import { PhoneProvider } from "@/context/PhoneContext";
+import { WhatsAppButtonAlt } from "@/components/layout/whatsapp-button-alt";
+
+import "@/lib/dayjs";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -31,7 +33,7 @@ export default async function RootLayout({
 
   const attributes = data?.data || null;
 
-  const { name, socialMedia } = parseConfigData(attributes);
+  const { name, socialMedia, phone } = parseConfigData(attributes);
 
   return (
     <html lang="es" suppressHydrationWarning>
@@ -39,13 +41,19 @@ export default async function RootLayout({
         <ThemeProvider attribute="class" defaultTheme="light" enableSystem>
           <ScrollToHash />
           {attributes ? (
-            <>
+            <PhoneProvider phone={phone}>
               <Header name={name} />
               {children}
               <CTASection />
               <Footer name={name} socialMedia={socialMedia} />
-              <WhatsAppButton />
-            </>
+              {/* <WhatsAppButton /> */}
+
+              <WhatsAppButtonAlt
+                tooltipTitle="¡Respuesta inmediata!"
+                tooltipText="Contácteme por WhatsApp y le responderé en menos de 15 minutos."
+                message="Hola, estoy interesado en sus servicios de mantenimiento. ¿Podría darme más información?"
+              />
+            </PhoneProvider>
           ) : (
             <ErrorView
               type="generic"

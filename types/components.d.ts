@@ -107,7 +107,6 @@ export type ContactMeProps = {
   data: {
     title: string;
     description: string;
-    phone: string;
     email: string;
     location: string;
     timetables: string;

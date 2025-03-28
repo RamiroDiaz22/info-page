@@ -30,7 +30,6 @@ export const parseHomeData = (info: Record<string, any> | null) => ({
   contractMe: validateExist(info?.contractMe) && {
     title: info?.contractMe.head.title,
     description: info?.contractMe.head.description,
-    phone: info?.contractMe.phone,
     email: info?.contractMe.email,
     location: info?.contractMe.location,
     timetables: info?.contractMe.timetables,
@@ -59,6 +58,7 @@ export const parseConfigData = (info: Record<string, any> | null) => {
   return {
     name: info?.name,
     socialMedia: info?.socialMedia || [],
+    phone: info?.phone || null,
   };
 };
 

@@ -75,6 +75,21 @@
   }
 }
 
+/* Animación de rebote lento para el tooltip */
+@keyframes bounce-slow {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+.animate-bounce-slow {
+  animation: bounce-slow 3s ease-in-out infinite;
+}
+
 /* Fallback styles in case Tailwind doesn't load properly */
 :root {
   --color-primary: #ff7a22; /* El naranja vibrante */
