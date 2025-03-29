@@ -15,6 +15,8 @@ import { PhoneProvider } from "@/context/PhoneContext";
 import { WhatsAppButtonAlt } from "@/components/layout/whatsapp-button-alt";
 
 import "@/lib/dayjs";
+import { EmailService } from "../components/utils/email-service";
+import { RecaptchaScript } from "../components/utils/recaptcha-script";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -43,6 +45,10 @@ export default async function RootLayout({
           {attributes ? (
             <PhoneProvider phone={phone}>
               <Header name={name} />
+              {/* TODO */}
+              <EmailService
+                publicKey={process.env.NEXT_PUBLIC_EMAIL_PUBLIC_KEY || ""}
+              />
               {children}
               <CTASection />
               <Footer name={name} socialMedia={socialMedia} />
@@ -53,6 +59,7 @@ export default async function RootLayout({
                 tooltipText="Contácteme por WhatsApp y le responderé en menos de 15 minutos."
                 message="Hola, estoy interesado en sus servicios de mantenimiento. ¿Podría darme más información?"
               />
+              <RecaptchaScript />
             </PhoneProvider>
           ) : (
             <ErrorView

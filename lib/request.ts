@@ -116,3 +116,17 @@ export const getRelatedProjects = (slug: string, categories: string[]) => {
 
   return getRequest(PARAMS_STRAPI.WORKS, query);
 };
+
+export const getAllCategories = async () => {
+  const query = clearParams(
+    `
+  filters[isActive][$eq]=true&
+        fields=categorie&
+        fields=slug
+  `
+  );
+
+  const result = await getRequest(PARAMS_STRAPI.CATEGORIES, query);
+  if (!result.success) return null;
+  return result.data;
+};

@@ -73,7 +73,7 @@ export function WhatsAppButtonAlt({
         <div className="absolute bottom-16 right-0 bg-white rounded-lg shadow-xl p-4 w-72 animate-bounce-slow mb-3 border-l-4 border-green-500">
           <button
             onClick={closeTooltip}
-            className="absolute -top-2 -right-2 bg-gray-200 rounded-full p-1 hover:bg-gray-300 transition-colors"
+            className="absolute -top-2 -right-2 bg-gray-200 rounded-full p-1 transition-colors"
             aria-label="Cerrar"
           >
             <X className="h-4 w-4" />
@@ -90,7 +90,7 @@ export function WhatsAppButtonAlt({
               <p className="text-gray-600 text-xs mt-1">{tooltipText}</p>
               <Button
                 size="sm"
-                className="mt-2 bg-green-500 hover:bg-green-600 text-xs h-8 w-full"
+                className="mt-2 bg-green-500 text-xs h-8 w-full"
                 onClick={() => {
                   window.open(whatsappUrl, "_blank");
                   closeTooltip();
@@ -118,8 +118,8 @@ export function WhatsAppButtonAlt({
         className={cn(
           "flex items-center justify-center w-14 h-14 rounded-full bg-green-500 text-white shadow-lg transition-all",
           showTooltip || isHovering
-            ? "ring-4 ring-green-300 scale-110"
-            : "hover:bg-green-600 hover:scale-105"
+            ? "ring-4 ring-transparent scale-110"
+            : "hover:scale-105"
         )}
         onClick={() => {
           if (showTooltip) {
