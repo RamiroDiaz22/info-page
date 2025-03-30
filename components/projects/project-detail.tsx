@@ -18,7 +18,7 @@ import { useRouter } from "next/navigation";
 import { PROFESSIONS_ICON } from "@/lib/const";
 import { capitalizeFirstLetter } from "@/lib/functions";
 import dayjs from "@/lib/dayjs";
-import { usePhone } from "@/context/PhoneContext";
+import { useData } from "@/context/DataContext";
 import { CallButton } from "@/components/ui/call-button";
 
 interface ProjectDetailProps {
@@ -30,7 +30,7 @@ export default function ProjectDetail({
   project,
   relatedProjects,
 }: ProjectDetailProps) {
-  const { phone } = usePhone();
+  const { phone } = useData();
   const route = useRouter();
   const [isZoomed, setIsZoomed] = useState(false);
   const [activeImage, setActiveImage] = useState(0);

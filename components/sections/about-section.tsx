@@ -10,7 +10,7 @@ export function AboutSection({
 }: AboutMeProps) {
   return (
     <section
-      id="sobre-mi"
+      id="nosotros"
       className="w-full py-12 md:py-24 lg:py-32 bg-muted scroll-mt-16"
     >
       <div className="container px-4 md:px-6">
@@ -29,7 +29,7 @@ export function AboutSection({
           </div>
           <div className="space-y-4">
             <div className="inline-block rounded-lg bg-primary/10 px-3 py-1 text-sm text-primary">
-              Sobre Mí
+              Nosotros
             </div>
             <SubTitleCustom title={title} />
 

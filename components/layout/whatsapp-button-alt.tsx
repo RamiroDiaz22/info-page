@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import { MessageCircle, X, ArrowRight } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
-import { usePhone } from "@/context/PhoneContext";
+import { useData } from "@/context/DataContext";
 import Image from "next/image";
 import wp from "@/assets/whatsapp.svg";
 
@@ -19,11 +19,11 @@ interface WhatsAppButtonProps {
 export function WhatsAppButtonAlt({
   message = "Hola, me gustaría recibir más información sobre sus servicios.",
   tooltipTitle = "¿Necesita ayuda rápida?",
-  tooltipText = "¡Contácteme por WhatsApp para una respuesta inmediata!",
+  tooltipText = "Contáctanos por WhatsApp para una respuesta inmediata!",
   tooltipDelay = 3000,
   tooltipDuration = 60000,
 }: WhatsAppButtonProps) {
-  const { phone } = usePhone();
+  const { phone } = useData();
   const [showTooltip, setShowTooltip] = useState(false);
   const [tooltipClosed, setTooltipClosed] = useState(false);
   const [isHovering, setIsHovering] = useState(false);
@@ -67,7 +67,7 @@ export function WhatsAppButtonAlt({
   )}`;
 
   return (
-    <div className="fixed bottom-6 lg:bottom-20 right-6 z-50">
+    <div className="fixed bottom-24 right-2 lg:right-4 z-50">
       {/* Tooltip/Mini Modal */}
       {showTooltip && (
         <div className="absolute bottom-16 right-0 bg-white rounded-lg shadow-xl p-4 w-72 animate-bounce-slow mb-3 border-l-4 border-green-500">

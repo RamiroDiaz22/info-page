@@ -7,16 +7,16 @@ import { Textarea } from "@/components/ui/textarea";
 import { ContactMeProps } from "@/types/components";
 import { SubTitleCustom } from "@/components/ui/title";
 import { CONTACT_ICON } from "@/lib/const";
-import { usePhone } from "@/context/PhoneContext";
+import { useData } from "@/context/DataContext";
 import { useEffect, useRef, useState } from "react";
 import emailjs from "@emailjs/browser";
 import { getAllCategories } from "@/lib/request";
 import ReCAPTCHA from "react-google-recaptcha";
 
 export function ContactSection({
-  data: { title, why, description, email, location, timetables },
+  data: { title, why, description, location, timetables },
 }: ContactMeProps) {
-  const { phone } = usePhone();
+  const { phone, email } = useData();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitSuccess, setSubmitSuccess] = useState(false);
   const [categorieData, setCategorieData] = useState<any>(null);
@@ -76,11 +76,12 @@ export function ContactSection({
       });
 
       // Enviar el formulario usando EmailJS
-      const result = await emailjs.send(
+      await emailjs.send(
         process.env.NEXT_PUBLIC_EMAIL_SERVICE_ID || "",
         process.env.NEXT_PUBLIC_EMAIL_TEMPLATE_ID || "",
         {
           ...formJson,
+          year: new Date().getFullYear(),
           "g-recaptcha-response": recaptchaToken,
         }
       );
@@ -262,7 +263,7 @@ export function ContactSection({
 
                   {categorieData?.length > 0 &&
                     categorieData.map((el: any) => (
-                      <option key={el.slug} value={el.slug}>
+                      <option key={el.slug} value={el.categorie}>
                         {el.categorie}
                       </option>
                     ))}

@@ -8,7 +8,7 @@ import { Phone, Copy, Check } from "lucide-react";
 import { useMobile } from "@/hooks/use-mobile";
 import { useToast } from "@/components/ui/toast";
 import QRCode from "react-qr-code";
-import { usePhone } from "../../context/PhoneContext";
+import { useData } from "../../context/DataContext";
 
 interface CallButtonProps {
   variant?: "default" | "outline" | "ghost";
@@ -25,12 +25,12 @@ export function CallButton({
 }: CallButtonProps) {
   const isMobile = useMobile();
   const { showToast } = useToast();
-  const { phone } = usePhone();
+  const { phone } = useData();
   const [showModal, setShowModal] = useState(false);
   const [copied, setCopied] = useState(false);
   const formattedNumber = (phone || "").startsWith("+")
     ? phone || ""
-    : `+${phone || ""}`;
+    : `+54 ${phone || ""}`;
   const displayNumber = formattedNumber.replace(
     /(\+\d{2})(\d{3})(\d{3})(\d{3})/,
     "$1 $2 $3 $4"
@@ -74,14 +74,16 @@ export function CallButton({
       {/* Modal para desktop */}
       {showModal && !isMobile && (
         <div
-          className="fixed inset-0 bg-black/50 flex items-center justify-center z-50"
+          className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 text-foreground"
           onClick={() => setShowModal(false)}
         >
           <div
             className="bg-background rounded-lg p-6 max-w-md w-full shadow-xl"
             onClick={(e) => e.stopPropagation()}
           >
-            <h3 className="text-xl font-bold mb-4">Contactar por teléfono</h3>
+            <h3 className="text-xl font-bold mb-4 text-start">
+              Contactar por teléfono
+            </h3>
 
             <div className="text-center mb-6">
               <p className="text-muted-foreground mb-2">Llámenos al:</p>

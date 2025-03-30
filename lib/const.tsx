@@ -4,6 +4,7 @@ import {
   CheckCircle,
   Clock,
   Hammer,
+  Home,
   Mail,
   MapPin,
   Paintbrush,
@@ -13,6 +14,7 @@ import {
   Zap,
 } from "lucide-react";
 import { SocialMediaTypeEnum } from "../enum/socialMedia.enum";
+import { Metadata } from "next";
 
 export const daysInSpanish = [
   "Domingo",
@@ -59,6 +61,12 @@ export const PROFESSIONS_ICON = {
   ),
   [ProfessionsEnum.PLOMERIA]: (props: React.SVGProps<SVGSVGElement>) => (
     <Wrench {...props} />
+  ),
+  [ProfessionsEnum.REFORMAS]: (props: React.SVGProps<SVGSVGElement>) => (
+    <CheckCircle {...props} />
+  ),
+  [ProfessionsEnum.CONSTRUCCION]: (props: React.SVGProps<SVGSVGElement>) => (
+    <Home {...props} />
   ),
 };
 
@@ -120,4 +128,58 @@ export const SOCIAL_MEDIA_ICON = {
       <line x1="17.5" x2="17.51" y1="6.5" y2="6.5" />
     </svg>
   ),
+};
+
+export const METADATA: Metadata = {
+  title: "MarcoSoluciones - Servicios de Mantenimiento y Construcción",
+  description:
+    "Servicios profesionales de mantenimiento general y construcción para hogares y empresas. Electricidad, carpintería, albañilería, reformas y proyectos de construcción en Buenos Aires, Argentina.",
+  keywords:
+    "mantenimiento, construcción, reformas, electricidad, carpintería, albañilería, plomería, placas de yeso, construcción de viviendas, proyectos comerciales, Buenos Aires, Argentina",
+  authors: [{ name: "MarcoSoluciones" }],
+  creator: "MarcoSoluciones",
+  publisher: "MarcoSoluciones",
+  formatDetection: {
+    telephone: true,
+    email: true,
+    address: true,
+  },
+  metadataBase: new URL("https://marco-soluciones.vercel.app"),
+  alternates: {
+    canonical: "/",
+  },
+  openGraph: {
+    type: "website",
+    locale: "es_AR",
+    url: "https://marco-soluciones.vercel.app",
+    title: "MarcoSoluciones - Servicios de Mantenimiento y Construcción",
+    description:
+      "Servicios profesionales de mantenimiento general y construcción para hogares y empresas en Buenos Aires, Argentina.",
+    siteName: "MarcoSoluciones",
+    images: [
+      {
+        url: "/images/og-image.jpg",
+        width: 1200,
+        height: 630,
+        alt: "MarcoSoluciones - Servicios de Mantenimiento y Construcción",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "MarcoSoluciones - Servicios de Mantenimiento y Construcción",
+    description:
+      "Servicios profesionales de mantenimiento general y construcción para hogares y empresas en Buenos Aires, Argentina.",
+    images: ["/images/og-image.jpg"],
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+    },
+  },
 };

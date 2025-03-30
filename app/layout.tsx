@@ -7,24 +7,19 @@ import { Header } from "@/components/layout/header";
 import { Footer } from "@/components/layout/footer";
 import { getLandingData, PARAMS_STRAPI } from "@/lib/request";
 import { parseConfigData } from "@/lib/functions";
-// import { WhatsAppButton } from "@/components/layout/whatsapp-button";
 import { CTASection } from "@/components/sections/cta-section";
-import { ErrorView } from "@/components/ui/error-view";
 import { ScrollToHash } from "@/components/utils/scroll-to-hash";
-import { PhoneProvider } from "@/context/PhoneContext";
+import { DataProvider } from "@/context/DataContext";
 import { WhatsAppButtonAlt } from "@/components/layout/whatsapp-button-alt";
 
 import "@/lib/dayjs";
-import { EmailService } from "../components/utils/email-service";
-import { RecaptchaScript } from "../components/utils/recaptcha-script";
+import { EmailService } from "@/components/utils/email-service";
+import { RecaptchaScript } from "@/components/utils/recaptcha-script";
+import { METADATA } from "@/lib/const";
 
 const inter = Inter({ subsets: ["latin"] });
 
-export const metadata: Metadata = {
-  title: "MantenimientosPro - Servicios de mantenimiento profesional",
-  description:
-    "Servicios de mantenimiento y reparación para hogares y empresas con calidad garantizada",
-};
+export const metadata: Metadata = METADATA;
 
 export default async function RootLayout({
   children,
@@ -35,39 +30,30 @@ export default async function RootLayout({
 
   const attributes = data?.data || null;
 
-  const { name, socialMedia, phone } = parseConfigData(attributes);
+  const { socialMedia, phone, email } = parseConfigData(attributes);
 
   return (
     <html lang="es" suppressHydrationWarning>
       <body className={inter.className}>
         <ThemeProvider attribute="class" defaultTheme="light" enableSystem>
           <ScrollToHash />
-          {attributes ? (
-            <PhoneProvider phone={phone}>
-              <Header name={name} />
-              {/* TODO */}
-              <EmailService
-                publicKey={process.env.NEXT_PUBLIC_EMAIL_PUBLIC_KEY || ""}
-              />
-              {children}
-              <CTASection />
-              <Footer name={name} socialMedia={socialMedia} />
-              {/* <WhatsAppButton /> */}
-
-              <WhatsAppButtonAlt
-                tooltipTitle="¡Respuesta inmediata!"
-                tooltipText="Contácteme por WhatsApp y le responderé en menos de 15 minutos."
-                message="Hola, estoy interesado en sus servicios de mantenimiento. ¿Podría darme más información?"
-              />
-              <RecaptchaScript />
-            </PhoneProvider>
-          ) : (
-            <ErrorView
-              type="generic"
-              title="Error al cargar datos"
-              message="Lo sentimos, estamos presenciando problemas. Por favor, intente nuevamente más tarde."
+          <DataProvider phone={phone} email={email}>
+            <Header />
+            <EmailService
+              publicKey={process.env.NEXT_PUBLIC_EMAIL_PUBLIC_KEY || ""}
             />
-          )}
+            {children}
+            <CTASection />
+            <Footer socialMedia={socialMedia} />
+            {/* <WhatsAppButton /> */}
+
+            <WhatsAppButtonAlt
+              tooltipTitle="¡Respuesta inmediata!"
+              tooltipText="Contáctanos por WhatsApp y le responderemos en menos de 15 minutos."
+              message="Hola, estoy interesado en sus servicios de mantenimiento. ¿Podría darme más información?"
+            />
+            <RecaptchaScript />
+          </DataProvider>
         </ThemeProvider>
       </body>
     </html>
