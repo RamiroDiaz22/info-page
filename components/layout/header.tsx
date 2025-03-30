@@ -3,10 +3,9 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Wrench, X } from "lucide-react";
-import { HeaderProps } from "../../types/components";
 import Link from "next/link";
 
-export function Header({ name }: HeaderProps) {
+export function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   return (
@@ -14,7 +13,7 @@ export function Header({ name }: HeaderProps) {
       <div className="container flex h-16 items-center justify-between py-4">
         <Link href="/" className="flex items-center gap-2">
           <Wrench className="h-6 w-6 text-primary" />
-          <span className="text-xl font-bold">{name}</span>
+          <span className="text-xl font-bold">MarcoSoluciones</span>
         </Link>
         <nav className="hidden md:flex gap-6">
           <Link
@@ -24,10 +23,10 @@ export function Header({ name }: HeaderProps) {
             Servicios
           </Link>
           <Link
-            href="/#sobre-mi"
+            href="/#nosotros"
             className="text-sm font-medium hover:text-primary transition-colors"
           >
-            Sobre Mí
+            Nosotros
           </Link>
           <Link
             href="/#testimonios"
@@ -93,7 +92,7 @@ export function Header({ name }: HeaderProps) {
               Servicios
             </Link>
             <Link
-              href="/#sobre-mi"
+              href="/#nosotros"
               className="text-lg font-medium hover:text-primary px-2 py-2 rounded-md hover:bg-muted transition-colors"
               onClick={() => setMobileMenuOpen(false)}
             >

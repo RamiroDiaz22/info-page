@@ -28,7 +28,6 @@ export const getLandingData = async (
             populate[portfolio][populate][works][fields]=slug&
             populate[portfolio][populate][works][populate][previewImage][fields]=url&
             populate[portfolio][populate][works][sort]=createdAt:desc&
-            populate[portfolio][populate][projects][populate][preview][fields]=url&
             populate[hero][populate][heroImage][populate][image][fields]=url&
             populate[hero][populate][head]=*&
             populate=categories
@@ -69,7 +68,7 @@ export const getLandingData = async (
   };
 
   const result = await getRequest(param, getQuery());
-  if (!result.success) return null;
+  if (!result.success) return;
   return result.data;
 };
 
@@ -93,11 +92,17 @@ export const getProjectData = async (slug: string) => {
   );
 
   const result = await getRequest(PARAMS_STRAPI.WORKS, query);
-  if (!result.success) return null;
+  if (!result.success) {
+    throw new Error("Error al obtener los datos del servidor");
+  }
+
   return result.data;
 };
 
-export const getRelatedProjects = (slug: string, categories: string[]) => {
+export const getRelatedProjects = async (
+  slug: string,
+  categories: string[]
+) => {
   const filterCategories = categories.map(
     (el) => `filters[categories][slug][$eq]=${el}&`
   );
@@ -114,5 +119,29 @@ export const getRelatedProjects = (slug: string, categories: string[]) => {
   `
   );
 
-  return getRequest(PARAMS_STRAPI.WORKS, query);
+  const result = await getRequest(PARAMS_STRAPI.WORKS, query);
+
+  if (!result.success) {
+    throw new Error("Error al obtener los datos del servidor");
+  }
+
+  return result.data;
+};
+
+export const getAllCategories = async () => {
+  const query = clearParams(
+    `
+  filters[isActive][$eq]=true&
+        fields=categorie&
+        fields=slug
+  `
+  );
+
+  const result = await getRequest(PARAMS_STRAPI.CATEGORIES, query);
+
+  if (!result.success) {
+    throw new Error("Error al obtener los datos del servidor");
+  }
+
+  return result.data;
 };

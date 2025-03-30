@@ -1,10 +1,6 @@
 import { ProfessionsEnum } from "../enum/professions.enum";
 import { SocialMediaTypeEnum } from "../enum/socialMedia.enum";
 
-export type HeaderProps = {
-  name: string;
-};
-
 export type HeroProps = {
   data: {
     title: string;
@@ -120,6 +116,5 @@ type SocialMedia = {
 };
 
 export type FooterProps = {
-  name: string;
-  socialMedia: SocialMedia[];
+  socialMedia?: SocialMedia[];
 };

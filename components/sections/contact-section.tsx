@@ -1,3 +1,5 @@
+"use client";
+
 import { CheckCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -5,12 +7,106 @@ import { Textarea } from "@/components/ui/textarea";
 import { ContactMeProps } from "@/types/components";
 import { SubTitleCustom } from "@/components/ui/title";
 import { CONTACT_ICON } from "@/lib/const";
-import { usePhone } from "@/context/PhoneContext";
+import { useData } from "@/context/DataContext";
+import { useEffect, useRef, useState } from "react";
+import emailjs from "@emailjs/browser";
+import { getAllCategories } from "@/lib/request";
+import ReCAPTCHA from "react-google-recaptcha";
 
 export function ContactSection({
-  data: { title, why, description, email, location, timetables },
+  data: { title, why, description, location, timetables },
 }: ContactMeProps) {
-  const { phone } = usePhone();
+  const { phone, email } = useData();
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitSuccess, setSubmitSuccess] = useState(false);
+  const [categorieData, setCategorieData] = useState<any>(null);
+  const [submitError, setSubmitError] = useState<string | null>(null);
+
+  const formRef = useRef<HTMLFormElement>(null);
+  const recaptchaRef = useRef<ReCAPTCHA>(null);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const responseCategories = await getAllCategories();
+        const attributesCategories = responseCategories?.data || null;
+
+        if (attributesCategories) {
+          const parsedProjectData = attributesCategories.map((item: any) => ({
+            slug: item.slug,
+            categorie: item.categorie,
+          }));
+          setCategorieData(parsedProjectData);
+        }
+      } catch (error) {
+        console.error("Error al cargar los datos:", error);
+      }
+    };
+
+    fetchData();
+  }, []);
+
+  // Función para manejar el envío del formulario
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+
+    if (!formRef.current || !recaptchaRef.current) return;
+
+    try {
+      setIsSubmitting(true);
+      setSubmitError(null);
+
+      // Ejecutar reCAPTCHA invisible
+      const recaptchaToken = await recaptchaRef.current.executeAsync();
+
+      // Si no se obtiene un token, mostrar error
+      if (!recaptchaToken) {
+        throw new Error(
+          "No se pudo verificar que no eres un robot. Por favor, inténtalo de nuevo."
+        );
+      }
+
+      // Crear un objeto con los datos del formulario
+      const formData = new FormData(formRef.current);
+
+      // Convertir FormData a un objeto para EmailJS
+      const formJson: Record<string, string> = {};
+      formData.forEach((value, key) => {
+        formJson[key] = value.toString();
+      });
+
+      // Enviar el formulario usando EmailJS
+      await emailjs.send(
+        process.env.NEXT_PUBLIC_EMAIL_SERVICE_ID || "",
+        process.env.NEXT_PUBLIC_EMAIL_TEMPLATE_ID || "",
+        {
+          ...formJson,
+          year: new Date().getFullYear(),
+          "g-recaptcha-response": recaptchaToken,
+        }
+      );
+
+      setSubmitSuccess(true);
+      formRef.current.reset();
+
+      // Resetear el reCAPTCHA
+      recaptchaRef.current.reset();
+
+      // Resetear el estado después de 5 segundos
+      setTimeout(() => {
+        setSubmitSuccess(false);
+      }, 5000);
+    } catch (error) {
+      console.error("Error al enviar el correo:", error);
+      setSubmitError(
+        error instanceof Error
+          ? error.message
+          : "Hubo un error al enviar el mensaje. Por favor, inténtelo de nuevo."
+      );
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
 
   return (
     <section
@@ -84,47 +180,70 @@ export function ContactSection({
           </div>
           <div className="space-y-4 rounded-lg border bg-background p-6 shadow-lg">
             <h3 className="text-xl font-bold">Solicitar Presupuesto Gratis</h3>
-            <form className="space-y-4">
+
+            {/* Mensaje de éxito */}
+            {submitSuccess && (
+              <div className="bg-green-50 border-l-4 border-green-500 p-4 mb-4 text-green-700">
+                <p className="font-medium">¡Mensaje enviado con éxito!</p>
+                <p>Nos pondremos en contacto con usted lo antes posible.</p>
+              </div>
+            )}
+
+            {/* Mensaje de error */}
+            {submitError && (
+              <div className="bg-red-50 border-l-4 border-red-500 p-4 mb-4 text-red-700">
+                <p className="font-medium">Error</p>
+                <p>{submitError}</p>
+              </div>
+            )}
+
+            <form ref={formRef} onSubmit={handleSubmit} className="space-y-4">
               <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
                 <div className="space-y-2">
                   <label
-                    htmlFor="name"
+                    htmlFor="user_name"
                     className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
                   >
                     Nombre
                   </label>
                   <Input
-                    id="name"
+                    id="user_name"
+                    name="user_name"
                     placeholder="Ingrese su nombre"
                     className="border-primary/20 focus:border-primary"
+                    required
                   />
                 </div>
                 <div className="space-y-2">
                   <label
-                    htmlFor="email"
+                    htmlFor="user_email"
                     className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
                   >
                     Email
                   </label>
                   <Input
-                    id="email"
+                    id="user_email"
+                    name="user_email"
                     type="email"
                     placeholder="Ingrese su email"
                     className="border-primary/20 focus:border-primary"
+                    required
                   />
                 </div>
               </div>
               <div className="space-y-2">
                 <label
-                  htmlFor="phone"
+                  htmlFor="user_phone"
                   className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
                 >
                   Teléfono
                 </label>
                 <Input
-                  id="phone"
+                  id="user_phone"
+                  name="user_phone"
                   placeholder="Ingrese su teléfono"
                   className="border-primary/20 focus:border-primary"
+                  required
                 />
               </div>
               <div className="space-y-2">
@@ -136,16 +255,20 @@ export function ContactSection({
                 </label>
                 <select
                   id="service"
+                  name="service"
                   className="flex h-10 w-full rounded-md border border-primary/20 bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+                  required
                 >
                   <option value="">Seleccione un servicio</option>
-                  <option value="electricidad">Electricidad</option>
-                  <option value="carpinteria">Carpintería</option>
-                  <option value="albañileria">Albañilería</option>
-                  <option value="placas-yeso">Placas de Yeso</option>
-                  <option value="plomeria">Plomería</option>
-                  <option value="mantenimiento">Mantenimiento General</option>
-                  <option value="otro">Otro</option>
+
+                  {categorieData?.length > 0 &&
+                    categorieData.map((el: any) => (
+                      <option key={el.slug} value={el.categorie}>
+                        {el.categorie}
+                      </option>
+                    ))}
+
+                  <option value="other">Otro</option>
                 </select>
               </div>
               <div className="space-y-2">
@@ -157,16 +280,53 @@ export function ContactSection({
                 </label>
                 <Textarea
                   id="message"
+                  name="message"
                   placeholder="Describa el trabajo que necesita"
                   className="min-h-[120px] border-primary/20 focus:border-primary"
+                  required
                 />
               </div>
-              <Button type="submit" className="w-full text-lg py-6" size="lg">
-                Enviar Solicitud
+
+              {/* reCAPTCHA invisible */}
+              <ReCAPTCHA
+                ref={recaptchaRef}
+                sitekey={process.env.NEXT_PUBLIC_RECAPTCHA || ""}
+                size="invisible"
+                badge="bottomright"
+              />
+
+              <Button
+                type="submit"
+                className="w-full text-lg py-6"
+                size="lg"
+                disabled={isSubmitting}
+              >
+                {isSubmitting ? "Enviando..." : "Enviar Solicitud"}
               </Button>
               <p className="text-sm text-muted-foreground text-center">
                 Le responderemos en menos de 24 horas con un presupuesto
                 detallado.
+              </p>
+              <p className="text-xs text-muted-foreground text-center mt-2">
+                Este sitio está protegido por reCAPTCHA y aplican la{" "}
+                <a
+                  href="https://policies.google.com/privacy"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-primary hover:underline"
+                >
+                  Política de Privacidad
+                </a>{" "}
+                y los{" "}
+                <a
+                  href="https://policies.google.com/terms"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-primary hover:underline"
+                >
+                  Términos de Servicio
+                </a>{" "}
+                de Google.
               </p>
             </form>
           </div>

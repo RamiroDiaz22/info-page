@@ -4,15 +4,14 @@ import { HeroProps } from "@/types/components";
 import { TitleCustom } from "@/components/ui/title";
 import ImageCustom from "@/components/ui/imageCustom";
 import { CallButton } from "@/components/ui/call-button";
-import { usePhone } from "@/context/PhoneContext";
+import { useData } from "@/context/DataContext";
 
 export function HeroSection({
   data: { description, title, heroImage },
 }: HeroProps) {
-  const { phone } = usePhone();
+  const { phone } = useData();
 
   return (
-    //TODO FALTA IMAGEN
     <section className="w-full py-12 md:py-24 lg:py-32 bg-gradient-to-b from-primary/10 to-background">
       <div className="container px-4 md:px-6">
         <div className="grid gap-6 lg:grid-cols-2 lg:gap-12 items-center">

@@ -3,10 +3,10 @@
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { CallButton } from "@/components/ui/call-button";
-import { usePhone } from "@/context/PhoneContext";
+import { useData } from "@/context/DataContext";
 
 export function CTASection() {
-  const { phone } = usePhone();
+  const { phone } = useData();
 
   return (
     <section className="w-full py-12 md:py-24 lg:py-32 bg-primary text-primary-foreground">
@@ -16,8 +16,8 @@ export function CTASection() {
             ¿Listo para mejorar su hogar o negocio?
           </h2>
           <p className="max-w-[700px] text-xl">
-            Contácteme hoy mismo para un presupuesto sin compromiso y descubra
-            la calidad de mis servicios.
+            Contáctanos hoy mismo para un presupuesto sin compromiso y descubra
+            la calidad de nuestros servicios.
           </p>
           <div className="flex flex-col sm:flex-row gap-4">
             <Button

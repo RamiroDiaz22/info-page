@@ -60,7 +60,7 @@ export function WhatsAppButton() {
                 ¿Necesita ayuda rápida?
               </h4>
               <p className="text-gray-600 text-xs mt-1">
-                ¡Contácteme por WhatsApp para una respuesta inmediata!
+                ¡Contáctanos por WhatsApp para una respuesta inmediata!
               </p>
             </div>
           </div>
