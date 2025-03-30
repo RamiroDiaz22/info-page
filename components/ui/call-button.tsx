@@ -74,7 +74,7 @@ export function CallButton({
       {/* Modal para desktop */}
       {showModal && !isMobile && (
         <div
-          className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 text-foreground"
+          className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 text-foreground !mt-0"
           onClick={() => setShowModal(false)}
         >
           <div
