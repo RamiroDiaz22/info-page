@@ -144,14 +144,14 @@ export const METADATA: Metadata = {
     email: true,
     address: true,
   },
-  metadataBase: new URL("https://marco-soluciones.vercel.app"),
+  metadataBase: new URL(process.env.NEXT_PUBLIC_BASE_URL || ""),
   alternates: {
     canonical: "/",
   },
   openGraph: {
     type: "website",
     locale: "es_AR",
-    url: "https://marco-soluciones.vercel.app",
+    url: process.env.NEXT_PUBLIC_BASE_URL || "",
     title: "MarcoSoluciones - Servicios de Mantenimiento y Construcción",
     description:
       "Servicios profesionales de mantenimiento general y construcción para hogares y empresas en Buenos Aires, Argentina.",

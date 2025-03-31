@@ -4,7 +4,7 @@ interface LocalBusinessProps {
   name?: string;
   description?: string;
   url?: string;
-  telephone?: string | null;
+  telephone?: string;
   address?: {
     streetAddress?: string;
     addressLocality?: string;
@@ -26,7 +26,7 @@ interface LocalBusinessProps {
 export function LocalBusinessJsonLd({
   name = "MarcoSoluciones",
   description = "Servicios profesionales de mantenimiento general y construcción para hogares y empresas.",
-  url = "https://marco-soluciones.vercel.app",
+  url = process.env.NEXT_PUBLIC_BASE_URL || "",
   telephone = "+5491112345678", // TODO: personalData
   address = {
     streetAddress: "Calle Principal 123", // TODO: locations
@@ -40,8 +40,8 @@ export function LocalBusinessJsonLd({
     longitude: -58.381592, // TODO: locations
   },
   images = [
-    "https://marco-soluciones.vercel.app/images/logo.jpg",
-    "https://marco-soluciones.vercel.app/images/building.jpg",
+    `${process.env.NEXT_PUBLIC_BASE_URL || ""}images/logo.jpg`, // TODO: add
+    `${process.env.NEXT_PUBLIC_BASE_URL || ""}images/building.jpg`, // TODO: add
   ],
   priceRange = "$$",
   openingHours = ["Mo-Fr 08:00-19:00", "Sa 09:00-14:00"],
@@ -179,10 +179,11 @@ export function FAQJsonLd({
   );
 }
 
+// Actualizar la interfaz BreadcrumbProps para que los items sean requeridos y tengan el tipo correcto
 interface BreadcrumbProps {
   items: Array<{
     name: string;
-    item?: string;
+    item: string;
   }>;
 }
 

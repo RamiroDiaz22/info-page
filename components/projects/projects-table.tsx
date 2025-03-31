@@ -1,43 +1,27 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { getLandingData, PARAMS_STRAPI } from "../../lib/request";
+import { Dispatch, SetStateAction } from "react";
 import { FilterCategories } from "./filter-categories";
 import ProjectList from "./project-list";
-import { ProfessionsEnum } from "../../enum/professions.enum";
-import { Loader } from "../ui/loader";
+import { ProfessionsEnum } from "@/enum/professions.enum";
+import { Loader } from "@/components/ui/loader";
+import { ProjectListType } from "@/types/components";
 
 interface ClientProyectosProps {
   categories: { categorie: string; slug: string }[];
+  activeCategory: ProfessionsEnum;
+  setActiveCategory: Dispatch<SetStateAction<ProfessionsEnum>>;
+  isLoading: boolean;
+  projects: ProjectListType[];
 }
 
-export default function ProjectsTable({ categories }: ClientProyectosProps) {
-  const [activeCategory, setActiveCategory] = useState(ProfessionsEnum.ALL);
-  const [projects, setProjects] = useState([]);
-  const [isLoading, setIsLoading] = useState(false);
-
-  useEffect(() => {
-    const fetchProjects = async () => {
-      setIsLoading(true);
-      try {
-        const data = await getLandingData(
-          PARAMS_STRAPI.WORKS,
-          activeCategory !== ProfessionsEnum.ALL
-            ? `&filters[categories][slug][$eq]=${activeCategory}`
-            : ""
-        );
-
-        setProjects(data?.data || []);
-      } catch (error) {
-        console.error("Error fetching projects:", error);
-      } finally {
-        setIsLoading(false);
-      }
-    };
-
-    fetchProjects();
-  }, [activeCategory]);
-
+export default function ProjectsTable({
+  categories,
+  activeCategory,
+  setActiveCategory,
+  isLoading,
+  projects,
+}: ClientProyectosProps) {
   return (
     <div>
       {/* Filtros */}

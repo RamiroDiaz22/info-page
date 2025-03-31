@@ -5,13 +5,8 @@ export default function robots(): MetadataRoute.Robots {
     rules: {
       userAgent: "*",
       allow: "/",
-      disallow: [
-        "/admin/",
-        "/private/",
-        "/ejemplo-error/",
-        "/ejemplo-proyecto-no-encontrado/",
-      ],
+      disallow: ["/admin/", "/private/"],
     },
-    sitemap: "https://marco-soluciones.vercel.app/sitemap.xml",
+    sitemap: `${process.env.NEXT_PUBLIC_BASE_URL || ""}sitemap.xml`,
   };
 }

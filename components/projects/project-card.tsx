@@ -1,28 +1,13 @@
 "use client";
 
-import Image from "next/image";
-import { Zap, Hammer, Ruler, Paintbrush, Wrench, Eye } from "lucide-react";
-import ImageCustom from "../ui/imageCustom";
-import { PROFESSIONS_ICON } from "../../lib/const";
-import { ProfessionsEnum } from "../../enum/professions.enum";
-import dayjs from "@/lib/dayjs";
-import { capitalizeFirstLetter } from "../../lib/functions";
+import ImageCustom from "@/components/ui/imageCustom";
+import { PROFESSIONS_ICON } from "@/lib/const";
+import { ProfessionsEnum } from "@/enum/professions.enum";
+import { ProjectListType } from "@/types/components";
+import { Eye } from "lucide-react";
 
 interface ProjectCardProps {
-  project: {
-    slug: string;
-    title: string;
-    categories: {
-      categorie: string;
-      slug: string;
-    }[];
-    description: string;
-    workingDate: string;
-    location: string;
-    previewImage: {
-      url: string;
-    };
-  };
+  project: ProjectListType;
   onClick: (slug: string) => void;
 }
 
