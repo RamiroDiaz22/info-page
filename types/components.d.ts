@@ -49,6 +49,8 @@ export type Project = {
   location: string;
   nameClient: string;
   typeClient: string;
+  createdAt: Date;
+  updatedAt: Date;
 };
 
 export type RelatedProject = {
@@ -117,4 +119,19 @@ type SocialMedia = {
 
 export type FooterProps = {
   socialMedia?: SocialMedia[];
+};
+
+export type ProjectListType = {
+  slug: string;
+  title: string;
+  categories: {
+    categorie: string;
+    slug: string;
+  }[];
+  description: string;
+  workingDate: string;
+  location: string;
+  previewImage: {
+    url: string;
+  };
 };

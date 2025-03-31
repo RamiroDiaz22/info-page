@@ -9,11 +9,18 @@ import ProjectsTable from "./projects/projects-table";
 import { TitleCustom } from "./ui/title";
 import { ChevronLeft } from "lucide-react";
 import Link from "next/link";
+import { ProfessionsEnum } from "@/enum/professions.enum";
+import { ProjectListType } from "@/types/components";
+import { ProjectsPageJsonLd } from "./seo/projects-json-ld";
 
 export default function ProjectPageClient() {
   const [isLoading, setIsLoading] = useState(true);
-  const [projectData, setprojectData] = useState<any>(null);
+  const [data, setData] = useState<any>(null);
   const [categorieData, setCategorieData] = useState<any>(null);
+  const [activeCategory, setActiveCategory] = useState(ProfessionsEnum.ALL);
+  const [projects, setProjects] = useState<ProjectListType[]>([]);
+  const [isProjectLoading, setIsProjectLoading] = useState(false);
+  const [projectsForJsonLd, setProjectsForJsonLd] = useState<any[]>([]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -28,7 +35,7 @@ export default function ProjectPageClient() {
 
         if (attributes) {
           const parsedData = parseProjectsData(attributes);
-          setprojectData(parsedData);
+          setData(parsedData);
 
           const parsedProjectData = paseCategoriesData(attributesCategories);
           setCategorieData(parsedProjectData);
@@ -43,6 +50,38 @@ export default function ProjectPageClient() {
     fetchData();
   }, []);
 
+  useEffect(() => {
+    const fetchProjects = async () => {
+      setIsProjectLoading(true);
+      try {
+        const data = await getLandingData(
+          PARAMS_STRAPI.WORKS,
+          activeCategory !== ProfessionsEnum.ALL
+            ? `&filters[categories][slug][$eq]=${activeCategory}`
+            : ""
+        );
+
+        setProjects(data?.data || []);
+
+        if (Array.isArray(data?.data)) {
+          const jsonLdProjects = data?.data.map((project: ProjectListType) => ({
+            name: project.title,
+            description: project.description,
+            image: `${process.env.NEXT_PUBLIC_STRAPI_URL_API}${project.previewImage.url}`,
+            category: project.categories?.[0].categorie,
+          }));
+          setProjectsForJsonLd(jsonLdProjects);
+        }
+      } catch (error) {
+        console.error("Error fetching projects:", error);
+      } finally {
+        setIsProjectLoading(false);
+      }
+    };
+
+    fetchProjects();
+  }, [activeCategory]);
+
   if (isLoading) {
     return (
       <main className="flex-1 flex items-center justify-center">
@@ -56,7 +95,7 @@ export default function ProjectPageClient() {
     );
   }
 
-  if (!projectData) {
+  if (!data) {
     return (
       <ErrorView
         type="generic"
@@ -66,11 +105,18 @@ export default function ProjectPageClient() {
     );
   }
 
-  const { description, title } = projectData;
+  const { description, title } = data;
   const { categories } = categorieData;
 
   return (
     <main className="flex-1">
+      {/* Añadir JSON-LD con datos dinámicos */}
+      <ProjectsPageJsonLd
+        title={title}
+        description={description}
+        projects={projectsForJsonLd}
+      />
+
       <section className="w-full py-12 md:py-16 bg-gradient-to-b from-primary/10 to-background">
         <div className="container px-4 md:px-6">
           <div className="flex flex-col items-center text-center space-y-4 relative">
@@ -91,6 +137,10 @@ export default function ProjectPageClient() {
 
       <ProjectsTable
         categories={categories as { categorie: string; slug: string }[]}
+        activeCategory={activeCategory}
+        setActiveCategory={setActiveCategory}
+        isLoading={isProjectLoading}
+        projects={projects}
       />
     </main>
   );
