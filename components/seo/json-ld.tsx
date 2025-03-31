@@ -73,7 +73,7 @@ export function LocalBusinessJsonLd({
     name: name,
     description: description,
     url: url,
-    telephone: telephone,
+    telephone: `+549${telephone}`,
     address: {
       "@type": "PostalAddress",
       streetAddress: address.streetAddress,
