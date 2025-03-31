@@ -10,7 +10,7 @@ export const metadata: Metadata = {
     title: "Proyectos | MarcoSoluciones",
     description:
       "Explore nuestra galería de proyectos de mantenimiento y construcción. Cada proyecto refleja nuestro compromiso con la calidad y la atención al detalle.",
-    url: `${process.env.NEXT_PUBLIC_BASE_URL || ""}proyectos`, // TODO
+    url: `${process.env.NEXT_PUBLIC_BASE_URL || ""}proyectos`,
     siteName: "MarcoSoluciones",
     images: [
       {
