@@ -66,7 +66,7 @@ export default function LandingPageClient() {
 
   return (
     <>
-      <LocalBusinessJsonLd telephone={phone} />
+      <LocalBusinessJsonLd telephone={phone || ""} />
       <FAQJsonLd />
       <main className="flex-1">
         {hero && <HeroSection data={hero} />}

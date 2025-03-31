@@ -16,6 +16,7 @@ import "@/lib/dayjs";
 import { EmailService } from "@/components/utils/email-service";
 import { RecaptchaScript } from "@/components/utils/recaptcha-script";
 import { METADATA } from "@/lib/const";
+import { Suspense } from "react";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -36,7 +37,9 @@ export default async function RootLayout({
     <html lang="es" suppressHydrationWarning>
       <body className={inter.className}>
         <ThemeProvider attribute="class" defaultTheme="light" enableSystem>
-          <ScrollToHash />
+          <Suspense fallback={null}>
+            <ScrollToHash />
+          </Suspense>
           <DataProvider phone={phone} email={email}>
             <Header />
             <EmailService
