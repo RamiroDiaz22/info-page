@@ -6,4 +6,6 @@ export enum ProfessionsEnum {
   PLOMERIA = "plomeria",
   MANTENIMIENTO = "mantenimiento",
   CARPINTERIA = "carpinteria",
+  CONSTRUCCION = "construccion",
+  REFORMAS = "reformas",
 }

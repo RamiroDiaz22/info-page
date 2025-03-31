@@ -11,8 +11,11 @@ import { Loader } from "@/components/ui/loader";
 import { getLandingData, PARAMS_STRAPI } from "@/lib/request";
 import { parseHomeData } from "@/lib/functions";
 import { ErrorView } from "./ui/error-view";
+import { FAQJsonLd, LocalBusinessJsonLd } from "./seo/json-ld";
+import { useData } from "@/context/DataContext";
 
 export default function LandingPageClient() {
+  const { phone } = useData();
   const [isLoading, setIsLoading] = useState(true);
   const [data, setData] = useState<any>(null);
 
@@ -62,13 +65,17 @@ export default function LandingPageClient() {
   const { hero, services, portfolio, aboutMe, testimonials, contractMe } = data;
 
   return (
-    <main className="flex-1">
-      {hero && <HeroSection data={hero} />}
-      {services && <ServicesSection data={services} />}
-      {portfolio && <PortfolioPreviewSection data={portfolio} />}
-      {aboutMe && <AboutSection data={aboutMe} />}
-      {testimonials && <TestimonialsSection data={testimonials} />}
-      {contractMe && <ContactSection data={contractMe} />}
-    </main>
+    <>
+      <LocalBusinessJsonLd telephone={phone} />
+      <FAQJsonLd />
+      <main className="flex-1">
+        {hero && <HeroSection data={hero} />}
+        {services && <ServicesSection data={services} />}
+        {portfolio && <PortfolioPreviewSection data={portfolio} />}
+        {aboutMe && <AboutSection data={aboutMe} />}
+        {testimonials && <TestimonialsSection data={testimonials} />}
+        {contractMe && <ContactSection data={contractMe} />}
+      </main>
+    </>
   );
 }

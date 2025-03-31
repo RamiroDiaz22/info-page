@@ -1,10 +1,6 @@
 import { ProfessionsEnum } from "../enum/professions.enum";
 import { SocialMediaTypeEnum } from "../enum/socialMedia.enum";
 
-export type HeaderProps = {
-  name: string;
-};
-
 export type HeroProps = {
   data: {
     title: string;
@@ -53,6 +49,8 @@ export type Project = {
   location: string;
   nameClient: string;
   typeClient: string;
+  createdAt: Date;
+  updatedAt: Date;
 };
 
 export type RelatedProject = {
@@ -107,7 +105,6 @@ export type ContactMeProps = {
   data: {
     title: string;
     description: string;
-    phone: string;
     email: string;
     location: string;
     timetables: string;
@@ -121,6 +118,20 @@ type SocialMedia = {
 };
 
 export type FooterProps = {
-  name: string;
-  socialMedia: SocialMedia[];
+  socialMedia?: SocialMedia[];
+};
+
+export type ProjectListType = {
+  slug: string;
+  title: string;
+  categories: {
+    categorie: string;
+    slug: string;
+  }[];
+  description: string;
+  workingDate: string;
+  location: string;
+  previewImage: {
+    url: string;
+  };
 };

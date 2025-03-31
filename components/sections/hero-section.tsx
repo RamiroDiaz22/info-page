@@ -1,16 +1,17 @@
 import Link from "next/link";
-import Image from "next/image";
 import { Button } from "@/components/ui/button";
-import { Phone } from "lucide-react";
-import { HeroProps } from "../../types/components";
-import { TitleCustom } from "../ui/title";
-import ImageCustom from "../ui/imageCustom";
+import { HeroProps } from "@/types/components";
+import { TitleCustom } from "@/components/ui/title";
+import ImageCustom from "@/components/ui/imageCustom";
+import { CallButton } from "@/components/ui/call-button";
+import { useData } from "@/context/DataContext";
 
 export function HeroSection({
   data: { description, title, heroImage },
 }: HeroProps) {
+  const { phone } = useData();
+
   return (
-    //TODO FALTA IMAGEN
     <section className="w-full py-12 md:py-24 lg:py-32 bg-gradient-to-b from-primary/10 to-background">
       <div className="container px-4 md:px-6">
         <div className="grid gap-6 lg:grid-cols-2 lg:gap-12 items-center">
@@ -30,17 +31,15 @@ export function HeroSection({
               >
                 <Link href="#contacto">Solicitar Presupuesto GRATIS</Link>
               </Button>
-              <Button
-                variant="outline"
-                size="lg"
-                asChild
-                className="text-lg group"
-              >
-                <a href="tel:+34600123456" className="flex items-center gap-2">
-                  <Phone className="h-5 w-5 group-hover:animate-pulse" />
-                  <span>Llamar Ahora</span>
-                </a>
-              </Button>
+              {phone && (
+                <CallButton
+                  variant="outline"
+                  size="lg"
+                  className="text-lg group"
+                >
+                  Llamar Ahora
+                </CallButton>
+              )}
             </div>
           </div>
           <div className="relative h-[300px] sm:h-[400px] lg:h-[500px] rounded-xl overflow-hidden shadow-xl transform transition-transform hover:scale-[1.02]">

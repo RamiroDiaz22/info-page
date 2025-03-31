@@ -1,30 +1,25 @@
 "use client";
 
 import Link from "next/link";
-import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import {
   ChevronLeft,
-  Phone,
-  Zap,
-  Hammer,
-  Ruler,
-  Paintbrush,
-  Wrench,
   ChevronRight,
   Calendar,
   User,
   MapPin,
   ArrowRight,
 } from "lucide-react";
-import { cn } from "../../lib/utils";
+import { cn } from "@/lib/utils";
 import { useEffect, useState } from "react";
-import ImageCustom from "../ui/imageCustom";
-import { Project, RelatedProject } from "../../types/components";
+import ImageCustom from "@/components/ui/imageCustom";
+import { Project, RelatedProject } from "@/types/components";
 import { useRouter } from "next/navigation";
-import { PROFESSIONS_ICON } from "../../lib/const";
-import { capitalizeFirstLetter } from "../../lib/functions";
+import { PROFESSIONS_ICON } from "@/lib/const";
+import { capitalizeFirstLetter } from "@/lib/functions";
 import dayjs from "@/lib/dayjs";
+import { useData } from "@/context/DataContext";
+import { CallButton } from "@/components/ui/call-button";
 
 interface ProjectDetailProps {
   project: Project;
@@ -35,6 +30,7 @@ export default function ProjectDetail({
   project,
   relatedProjects,
 }: ProjectDetailProps) {
+  const { phone } = useData();
   const route = useRouter();
   const [isZoomed, setIsZoomed] = useState(false);
   const [activeImage, setActiveImage] = useState(0);
@@ -236,17 +232,16 @@ export default function ProjectDetail({
                 <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
               </Link>
             </Button>
-            <Button
-              variant="outline"
-              size="lg"
-              asChild
-              className="w-full py-6 text-lg flex items-center justify-center gap-2 border-2 group"
-            >
-              <a href="tel:+34600123456">
-                <Phone className="h-5 w-5 group-hover:animate-pulse" />
-                <span>Llamar para consultar</span>
-              </a>
-            </Button>
+
+            {phone && (
+              <CallButton
+                variant="outline"
+                size="lg"
+                className="w-full py-6 text-lg flex items-center justify-center gap-2 border-2 group"
+              >
+                Llamar para consultar
+              </CallButton>
+            )}
           </div>
         </div>
       </div>

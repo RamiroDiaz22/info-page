@@ -2,26 +2,11 @@
 
 import { useRouter } from "next/navigation";
 import { ProjectCard } from "./project-card";
-import { SubTitleCustom } from "../ui/title";
+import { SubTitleCustom } from "@/components/ui/title";
+import { ProjectListType } from "@/types/components";
 
 interface ProjectListProps {
-  projects: {
-    id: string;
-    project: {
-      slug: number;
-      title: string;
-      categories: {
-        categorie: string;
-        slug: string;
-      }[];
-      description: string;
-      workingDate: string;
-      location: string;
-      previewImage: {
-        url: string;
-      };
-    };
-  }[];
+  projects: ProjectListType[];
 }
 
 export default function ProjectList({ projects }: ProjectListProps) {
@@ -40,7 +25,7 @@ export default function ProjectList({ projects }: ProjectListProps) {
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
       {projects.map((proyecto: any) => (
-        <ProjectCard key={proyecto.id} project={proyecto} onClick={onClick} />
+        <ProjectCard key={proyecto.slug} project={proyecto} onClick={onClick} />
       ))}
     </div>
   );
