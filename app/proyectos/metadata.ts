@@ -14,7 +14,7 @@ export const metadata: Metadata = {
     siteName: "MarcoSoluciones",
     images: [
       {
-        url: "/images/og-projects.jpg", // TODO: Puedes crear una imagen específica para la sección de proyectos
+        url: "/images/og-projects.png",
         width: 1200,
         height: 630,
         alt: "Proyectos de MarcoSoluciones",
@@ -28,6 +28,6 @@ export const metadata: Metadata = {
     title: "Proyectos | MarcoSoluciones",
     description:
       "Explore nuestra galería de proyectos de mantenimiento y construcción. Cada proyecto refleja nuestro compromiso con la calidad y la atención al detalle.",
-    images: ["/images/og-projects.jpg"],
+    images: ["/images/og-projects.png"],
   },
 };

@@ -3,11 +3,18 @@
 import { useEffect } from "react";
 import { usePathname, useSearchParams } from "next/navigation";
 
-export function ScrollToHash() {
+export function ScrollToHash({ isLoading }: { isLoading?: boolean }) {
   const pathname = usePathname();
   const searchParams = useSearchParams();
 
   useEffect(() => {
+    if (isLoading) {
+      return window.scrollTo({
+        top: 0,
+        behavior: "smooth",
+      });
+    }
+
     // Función para manejar el scroll a la sección
     const handleScrollToHash = () => {
       // Obtener el hash de la URL
@@ -35,7 +42,7 @@ export function ScrollToHash() {
 
     // Ejecutar el scroll cuando cambia la ruta o los parámetros
     handleScrollToHash();
-  }, [pathname, searchParams]);
+  }, [isLoading, pathname, searchParams]);
 
   return null;
 }

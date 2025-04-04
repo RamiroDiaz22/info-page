@@ -4,6 +4,8 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Wrench, X } from "lucide-react";
 import Link from "next/link";
+import Image from "next/image";
+import Logo from "../../assets/logo.svg";
 
 export function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -12,7 +14,13 @@ export function Header() {
     <header className="sticky top-0 z-40 w-full border-b bg-background shadow-sm">
       <div className="container flex h-16 items-center justify-between py-4">
         <Link href="/" className="flex items-center gap-2">
-          <Wrench className="h-6 w-6 text-primary" />
+          {/* <Wrench className="h-6 w-6 text-primary" /> */}
+
+          <Image
+            alt="MarcoSoluciones"
+            src={Logo}
+            className="h-8 lg:h-10 w-8 lg:w-10"
+          />
           <span className="text-xl font-bold">MarcoSoluciones</span>
         </Link>
         <nav className="hidden md:flex gap-6">

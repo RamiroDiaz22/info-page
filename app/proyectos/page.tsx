@@ -43,5 +43,9 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default function ProyectosPage() {
-  return <ProjectPageClient />;
+  return (
+    <div className="flex min-h-screen flex-col">
+      <ProjectPageClient />
+    </div>
+  );
 }

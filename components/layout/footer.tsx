@@ -13,6 +13,8 @@ import {
 import { FooterProps } from "../../types/components";
 import { SOCIAL_MEDIA_ICON } from "../../lib/const";
 import { useData } from "../../context/DataContext";
+import Image from "next/image";
+import Logo from "../../assets/logo.svg";
 
 export function Footer({ socialMedia }: FooterProps) {
   const { phone, email } = useData();
@@ -24,7 +26,13 @@ export function Footer({ socialMedia }: FooterProps) {
           {/* Primera columna: Secciones de la página */}
           <div className="space-y-6">
             <div className="flex items-center gap-2">
-              <Wrench className="h-6 w-6 text-primary" />
+              {/* <Wrench className="h-6 w-6 text-primary" /> */}
+
+              <Image
+                alt="MarcoSoluciones"
+                src={Logo}
+                className="h-8 lg:h-10 w-8 lg:w-10"
+              />
               <Link href={"/"} className="font-bold">
                 MarcoSoluciones
               </Link>

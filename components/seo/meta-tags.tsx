@@ -13,7 +13,7 @@ export function MetaTags({
   title = "MarcoSoluciones - Servicios de Mantenimiento y Construcción",
   description = "Servicios profesionales de mantenimiento general y construcción para hogares y empresas. Electricidad, carpintería, albañilería, reformas y proyectos de construcción.",
   keywords = "mantenimiento, construcción, reformas, electricidad, carpintería, albañilería, plomería, placas de yeso, construcción de viviendas, proyectos comerciales, Buenos Aires, Argentina",
-  ogImage = "/images/og-image.jpg",
+  ogImage = "/images/og-image.png",
   ogType = "website",
   canonical,
 }: MetaTagsProps) {

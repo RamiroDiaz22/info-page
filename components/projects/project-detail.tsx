@@ -83,7 +83,7 @@ export default function ProjectDetail({
       <ImageCustom
         alt={`Miniatura ${index + 1}`}
         className="object-cover"
-        image={media.url || "/placeholder.svg"}
+        image={media.url}
       />
     );
     // }
@@ -105,8 +105,7 @@ export default function ProjectDetail({
             <ImageCustom
               alt={`${project.title} - Imagen ${activeImage + 1}`}
               className="object-cover transition-transform duration-500 hover:scale-105"
-              image={media[activeImage]?.url || "/placeholder.svg"}
-              // image={project?.media[activeImage].url || "/placeholder.svg"}
+              image={media[activeImage]?.url}
             />
 
             {media.length > 1 && (
@@ -163,7 +162,7 @@ export default function ProjectDetail({
                   {/* <ImageCustom
                     alt={`Miniatura ${idx + 1}`}
                     className="object-cover"
-                    image={resource.url || "/placeholder.svg"}
+                    image={resource.url}
                   /> */}
                   {showMedia(resource, idx)}
                 </div>
