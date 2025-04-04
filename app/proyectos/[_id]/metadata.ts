@@ -9,7 +9,7 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   try {
     // Obtener datos del proyecto
-    const projectData = await getProjectData(params._id);
+    const projectData = await getProjectData(params?._id);
     const project = projectData?.data[0];
 
     if (!project) {
@@ -27,10 +27,9 @@ export async function generateMetadata({
       "Detalles del proyecto realizado por MarcoSoluciones.";
 
     // Obtener la primera imagen del proyecto para Open Graph
-    const ogImage =
-      project.media && project.media.length > 0
-        ? `${process.env.NEXT_PUBLIC_STRAPI_URL_API}${project.media[0].url}`
-        : "/images/default-project.jpg";
+    const ogImage = project.previewImage.url
+      ? `${process.env.NEXT_PUBLIC_STRAPI_URL_API}${project.previewImage.url}`
+      : "/images/default-project.png";
 
     // Construir keywords basadas en las categorías del proyecto
     const categories = project.categories

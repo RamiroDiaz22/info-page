@@ -13,6 +13,7 @@ import { parseHomeData } from "@/lib/functions";
 import { ErrorView } from "./ui/error-view";
 import { FAQJsonLd, LocalBusinessJsonLd } from "./seo/json-ld";
 import { useData } from "@/context/DataContext";
+import { ScrollToHash } from "./utils/scroll-to-hash";
 
 export default function LandingPageClient() {
   const { phone } = useData();
@@ -68,6 +69,7 @@ export default function LandingPageClient() {
     <>
       <LocalBusinessJsonLd telephone={phone || ""} />
       <FAQJsonLd />
+      <ScrollToHash isLoading={isLoading} />
       <main className="flex-1">
         {hero && <HeroSection data={hero} />}
         {services && <ServicesSection data={services} />}

@@ -3,7 +3,7 @@ const STRAPI_TOKEN = process.env.NEXT_PUBLIC_STRAPI_TOKEN;
 
 export const getRequest: any = async (url: string, params?: string) => {
   try {
-    console.log(`${STRAPI_URL_API}/api/${url}?${params}`);
+    // console.log(`${STRAPI_URL_API}/api/${url}?${params}`);
     const res = await fetch(`${STRAPI_URL_API}/api/${url}?${params}`, {
       method: "GET",
       headers: {

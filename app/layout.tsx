@@ -37,9 +37,9 @@ export default async function RootLayout({
     <html lang="es" suppressHydrationWarning>
       <body className={inter.className}>
         <ThemeProvider attribute="class" defaultTheme="light" enableSystem>
-          <Suspense fallback={null}>
+          {/* <Suspense fallback={null}>
             <ScrollToHash />
-          </Suspense>
+          </Suspense> */}
           <DataProvider phone={phone} email={email}>
             <Header />
             <EmailService

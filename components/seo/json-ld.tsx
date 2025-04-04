@@ -39,10 +39,7 @@ export function LocalBusinessJsonLd({
     latitude: -34.603722, // TODO: locations
     longitude: -58.381592, // TODO: locations
   },
-  images = [
-    `${process.env.NEXT_PUBLIC_BASE_URL || ""}images/logo.jpg`, // TODO: add
-    `${process.env.NEXT_PUBLIC_BASE_URL || ""}images/building.jpg`, // TODO: add
-  ],
+  images = [`${process.env.NEXT_PUBLIC_BASE_URL || ""}images/logo.png`],
   priceRange = "$$",
   openingHours = ["Mo-Fr 08:00-19:00", "Sa 09:00-14:00"],
   serviceArea = [

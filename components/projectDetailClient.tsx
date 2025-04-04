@@ -70,7 +70,7 @@ export default function ProjectDetailClient({
             project.slug,
             project.categories.map((el) => el.slug)
           );
-          setRelatedProjects(data?.data.data || []);
+          setRelatedProjects(data?.data || []);
         } catch (error) {
           console.error("Error fetching related projects:", error);
         }
