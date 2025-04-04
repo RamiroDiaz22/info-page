@@ -13,11 +13,11 @@ export default async function ProjectPage({
   params: { _id: string };
 }) {
   // Obtener datos del proyecto en el servidor
-  const projectData = await getProjectData(params._id);
+  const projectData = await getProjectData(params?._id);
   const project = projectData?.data[0] || null;
 
   return (
-    <>
+    <div className="flex min-h-screen flex-col">
       {/* Agregar BreadcrumbJsonLd para SEO */}
       <BreadcrumbJsonLd
         items={[
@@ -37,8 +37,13 @@ export default async function ProjectPage({
 
       {/* Renderizar el componente cliente con los datos del proyecto */}
       <Suspense fallback={<Loader message="Cargando proyecto..." />}>
-        <ProjectDetailClient projectId={params._id} initialProject={project} />
+        {params?._id && (
+          <ProjectDetailClient
+            projectId={params._id || ""}
+            initialProject={project}
+          />
+        )}
       </Suspense>
-    </>
+    </div>
   );
 }

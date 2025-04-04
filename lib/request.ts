@@ -79,6 +79,7 @@ export const getProjectData = async (slug: string) => {
   populate[categories][fields]=slug&
   populate[media][fields]=url&
   populate[media][fields]=mime&
+  populate[previewImage][fields]=url&
   fields=slug&
   fields=title&
   fields=description&

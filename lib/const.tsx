@@ -133,9 +133,9 @@ export const SOCIAL_MEDIA_ICON = {
 export const METADATA: Metadata = {
   title: "MarcoSoluciones - Servicios de Mantenimiento y Construcción",
   description:
-    "Servicios profesionales de mantenimiento general y construcción para hogares y empresas. Electricidad, carpintería, albañilería, reformas y proyectos de construcción en Buenos Aires, Argentina.",
+    "Expertos en mantenimiento, reparación y construcción para hogares y empresas en Buenos Aires. Servicios de electricidad, carpintería, albañilería y remodelaciones con calidad garantizada.",
   keywords:
-    "mantenimiento, construcción, reformas, electricidad, carpintería, albañilería, plomería, placas de yeso, construcción de viviendas, proyectos comerciales, Buenos Aires, Argentina",
+    "mantenimiento, reparación, construcción, reformas, electricidad, carpintería, albañilería, plomería, drywall, remodelaciones, Buenos Aires, Argentina",
   authors: [{ name: "MarcoSoluciones" }],
   creator: "MarcoSoluciones",
   publisher: "MarcoSoluciones",
@@ -154,11 +154,11 @@ export const METADATA: Metadata = {
     url: process.env.NEXT_PUBLIC_BASE_URL || "",
     title: "MarcoSoluciones - Servicios de Mantenimiento y Construcción",
     description:
-      "Servicios profesionales de mantenimiento general y construcción para hogares y empresas en Buenos Aires, Argentina.",
+      "Servicios profesionales de mantenimiento y construcción en Buenos Aires. Especialistas en electricidad, carpintería, albañilería y remodelaciones.",
     siteName: "MarcoSoluciones",
     images: [
       {
-        url: "/images/og-image.jpg",
+        url: "/images/og-image.png",
         width: 1200,
         height: 630,
         alt: "MarcoSoluciones - Servicios de Mantenimiento y Construcción",
@@ -169,8 +169,8 @@ export const METADATA: Metadata = {
     card: "summary_large_image",
     title: "MarcoSoluciones - Servicios de Mantenimiento y Construcción",
     description:
-      "Servicios profesionales de mantenimiento general y construcción para hogares y empresas en Buenos Aires, Argentina.",
-    images: ["/images/og-image.jpg"],
+      "Soluciones en mantenimiento y construcción para hogares y empresas en Buenos Aires. Calidad y experiencia garantizadas.",
+    images: ["/images/og-image.png"],
   },
   robots: {
     index: true,
@@ -181,5 +181,16 @@ export const METADATA: Metadata = {
       "max-image-preview": "large",
       "max-snippet": -1,
     },
+  },
+  icons: {
+    icon: [
+      { url: "/favicon.ico", sizes: "any" },
+      { url: "/favicon.svg", type: "image/svg+xml" },
+      { url: "/favicon-16x16.png", sizes: "16x16", type: "image/png" },
+      { url: "/favicon-32x32.png", sizes: "32x32", type: "image/png" },
+    ],
+    apple: [
+      { url: "/apple-touch-icon.png", sizes: "180x180", type: "image/png" },
+    ],
   },
 };

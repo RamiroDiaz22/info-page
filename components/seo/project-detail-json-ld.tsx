@@ -21,7 +21,7 @@ export function ProjectDetailJsonLd({
     image:
       project.media && project.media.length > 0
         ? `${process.env.NEXT_PUBLIC_STRAPI_URL_API}${project.media[0].url}`
-        : `${baseUrl}/images/default-project.jpg`,
+        : `${baseUrl}/images/default-project.png`,
     datePublished: project.createdAt || new Date().toISOString(),
     dateModified: project.updatedAt || new Date().toISOString(),
     author: {
@@ -34,7 +34,7 @@ export function ProjectDetailJsonLd({
       name: "MarcoSoluciones",
       logo: {
         "@type": "ImageObject",
-        url: `${baseUrl}/images/logo.jpg`,
+        url: `${baseUrl}/images/logo.png`,
       },
     },
     mainEntityOfPage: {
